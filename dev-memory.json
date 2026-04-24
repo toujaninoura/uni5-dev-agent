@@ -1,0 +1,28 @@
+{
+  "agent": {
+    "name": "uni5-dev-agent",
+    "version": "1.0.0",
+    "role": "Developer ? reads issues and delivers code"
+  },
+  "project": {
+    "name": null,
+    "stack": null,
+    "repo_url": null,
+    "owner": null,
+    "repo": null,
+    "local_path": null
+  },
+  "sprint": {
+    "current": 1,
+    "issues_done": [],
+    "issues_pending": []
+  },
+  "preferences": {
+    "commit_style": "conventional",
+    "pr_strategy": "squash",
+    "branch_naming": "feat/issue-{N}-{slug}",
+    "max_parallel_branches": 3
+  },
+  "instincts": [],
+  "decisions": []
+}
