@@ -115,3 +115,13 @@ Exemple : feat(api): add products endpoint
 - Async/await sur tous les I/O
 - Gestion d erreurs a chaque niveau
 - Logs ILogger sur les actions importantes
+
+## REGLE ABSOLUE - CODE REVIEW OBLIGATOIRE
+Apres chaque push de branche et AVANT de creer la PR :
+1. Appeler OBLIGATOIREMENT .claude/agents/code-reviewer.md
+2. Attendre le resultat REVIEW_PASSED
+3. Si REVIEW_FAILED -> corriger -> re-appeler code-reviewer
+4. Seulement apres REVIEW_PASSED -> creer la PR
+5. JAMAIS merger sans code review
+
+Cette etape ne peut pas etre sautee meme si le code semble correct.
