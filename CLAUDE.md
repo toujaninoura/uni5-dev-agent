@@ -125,3 +125,47 @@ Apres chaque push de branche et AVANT de creer la PR :
 5. JAMAIS merger sans code review
 
 Cette etape ne peut pas etre sautee meme si le code semble correct.
+
+## WORKFLOW FULLSTACK - 2 AGENTS DEV
+
+### Ordre de developpement obligatoire
+1. dotnet-agent  -> developpe l API .NET en premier
+2. code-reviewer -> review la PR .NET
+   - REVIEW_FAILED -> dotnet-agent corrige -> code-reviewer re-verifie
+   - REVIEW_PASSED -> merger la PR .NET
+3. angular-agent -> developpe le frontend APRES merge .NET
+4. code-reviewer -> review la PR Angular
+   - REVIEW_FAILED -> angular-agent corrige -> code-reviewer re-verifie
+   - REVIEW_PASSED -> merger la PR Angular
+
+### Pourquoi cet ordre ?
+Angular depend de l API .NET.
+L API doit etre mergee sur main avant de commencer Angular.
+
+### Identification de l agent a appeler
+Labels de l issue :
+- Label "dotnet" ou "api" -> appeler dotnet-agent
+- Label "angular" ou "frontend" -> appeler angular-agent
+- Pas de label -> analyser le titre :
+  - contient "controller/endpoint/API/.NET" -> dotnet-agent
+  - contient "component/page/Angular/UI" -> angular-agent
+
+### Code review par agent
+Apres dotnet-agent :
+- code-reviewer verifie : N-Tier, SOLID, JWT, DTOs, NUnit
+
+Apres angular-agent :
+- code-reviewer verifie : Standalone components, async pipe, JWT interceptor, Jasmine
+
+### Signal REVIEW_FAILED
+Si dotnet-agent recoit REVIEW_FAILED :
+- Lire commentaires PR
+- Corriger le code .NET
+- Repousser sur la meme branche
+- Signal -> code-reviewer re-verifie
+
+Si angular-agent recoit REVIEW_FAILED :
+- Lire commentaires PR
+- Corriger le code Angular
+- Repousser sur la meme branche
+- Signal -> code-reviewer re-verifie
