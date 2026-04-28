@@ -169,3 +169,31 @@ Si angular-agent recoit REVIEW_FAILED :
 - Corriger le code Angular
 - Repousser sur la meme branche
 - Signal -> code-reviewer re-verifie
+
+## RULES A CHARGER AU DEMARRAGE
+- .claude/rules/common.md
+- .claude/rules/best-practices.md
+- .claude/rules/csharp.md
+- .claude/rules/angular.md
+- .claude/rules/solid.md
+- .claude/rules/database.md
+- .claude/rules/jwt-auth.md
+- .claude/rules/tdd-nunit.md
+- .claude/rules/git-workflow.md
+- .claude/rules/error-handling.md
+- .claude/rules/api-standards.md
+- .claude/rules/security.md
+- .claude/rules/performance.md
+
+## SKILLS A CONSULTER SELON LA TACHE
+Scaffold .NET    -> .claude/skills/dotnet-scaffold.md
+Scaffold Angular -> .claude/skills/angular-scaffold.md
+Connexion API    -> .claude/skills/angular-api.md
+GitHub ops       -> .claude/skills/github-ops.md
+Git local        -> .claude/skills/git-workflow.md
+Git worktrees    -> .claude/skills/git-worktree.md
+Migrations EF    -> .claude/skills/dotnet-migrations.md
+Tests .NET       -> .claude/skills/dotnet-testing.md
+Tests Angular    -> .claude/skills/angular-testing.md
+Deployment       -> .claude/skills/deployment.md
+Memory           -> .claude/skills/memory-ops.md
