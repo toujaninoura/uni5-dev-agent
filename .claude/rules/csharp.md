@@ -1,25 +1,29 @@
-# Regles C# .NET 8
+# Règles C# / .NET 8
 
-## Architecture N-Tier obligatoire
-{Projet}.Domain/          -> Entites, Exceptions, Enums
-{Projet}.Application/     -> Interfaces, Services, DTOs, Validators, Mappings
-{Projet}.Infrastructure/  -> DbContext, Repositories, UnitOfWork
-{Projet}.API/             -> Controllers, Middlewares, Extensions
-{Projet}.Tests/           -> Tests NUnit + Moq
+## Stack obligatoire
+- Language : C# 12 / .NET 8
+- Framework : ASP.NET Core Web API
+- ORM : Entity Framework Core
+- Tests : NUnit + Moq
+- Validation : FluentValidation
+- Mapping : AutoMapper
 
-## Conventions
-- PascalCase pour classes et methodes
-- camelCase pour variables locales
-- IMonInterface pour les interfaces
-- _maVariable pour les prives
-- Async/await obligatoire sur tous les I/O
-- ApiResponse<T> sur tous les endpoints
-- Pagination sur tous les GET liste
-- FluentValidation sur tous les POST/PUT
-- AsNoTracking() sur les requetes lecture
+## Commandes
+- Build   : dotnet build
+- Test    : dotnet test
+- Run     : dotnet run
+- Format  : dotnet format
 
-## Packages obligatoires
-API          : Swashbuckle, FluentValidation.AspNetCore, AutoMapper
-Application  : AutoMapper, FluentValidation
-Infrastructure : EF Core, SqlServer, Tools
-Tests        : NUnit, NUnit3TestAdapter, Moq, FluentAssertions
+## Conventions de nommage
+- Classes et méthodes : PascalCase
+- Variables locales   : camelCase
+- Interfaces          : IMonInterface
+- Privés              : _maVariable
+- Constants           : MAJUSCULES
+
+## Principes obligatoires
+- Async/await sur tous les appels I/O
+- Jamais de .Result ou .Wait() (deadlock)
+- Nullable reference types activé
+- Gestion d'erreurs via middleware global
+- Logs via ILogger partout

@@ -5,69 +5,19 @@
     "role": "Developer - reads issues and delivers code"
   },
   "project": {
-    "name": "tasksAPI",
-    "stack": "dotnet",
-    "repo_url": "https://github.com/toujaninoura/tasksAPI",
+    "name": "contacts-manager",
+    "stack": "fullstack",
+    "repo_url": "https://github.com/toujaninoura/contacts-manager",
     "owner": "toujaninoura",
-    "repo": "tasksAPI",
-    "local_path": "C:\\projects\\tasksAPI"
+    "repo": "contacts-manager",
+    "local_path": "C:\\projects\\contacts-manager"
   },
   "sprint": {
     "current": 1,
-    "status": "DONE",
-    "qa": "PASSED",
-    "issues_done": [
-      {
-        "number": 1,
-        "title": "Setup projet .NET 8 + SQL Server",
-        "branch": "feat/issue-1-setup-dotnet8",
-        "pr": 8,
-        "done_at": "2026-04-27T00:00:00Z"
-      },
-      {
-        "number": 2,
-        "title": "GET /tasks - Lister toutes les taches",
-        "branch": "feat/issue-2-get-all-tasks",
-        "pr": 9,
-        "done_at": "2026-04-27T00:00:00Z"
-      },
-      {
-        "number": 3,
-        "title": "GET /tasks/{id} - Recuperer une tache",
-        "branch": "feat/issue-3-get-task-by-id",
-        "pr": 10,
-        "done_at": "2026-04-27T00:00:00Z"
-      },
-      {
-        "number": 4,
-        "title": "POST /tasks - Creer une tache",
-        "branch": "feat/issue-4-post-create-task",
-        "pr": 11,
-        "done_at": "2026-04-27T00:00:00Z"
-      },
-      {
-        "number": 5,
-        "title": "PUT /tasks/{id} - Modifier une tache",
-        "branch": "feat/issue-5-put-update-task",
-        "pr": 12,
-        "done_at": "2026-04-27T00:00:00Z"
-      },
-      {
-        "number": 6,
-        "title": "DELETE /tasks/{id} - Supprimer une tache",
-        "branch": "feat/issue-6-delete-task",
-        "pr": 13,
-        "done_at": "2026-04-27T00:00:00Z"
-      },
-      {
-        "number": 7,
-        "title": "Validation : titre obligatoire, max 100 caracteres",
-        "branch": "feat/issue-7-validation-titre",
-        "pr": 14,
-        "done_at": "2026-04-27T00:00:00Z"
-      }
-    ],
-    "issues_pending": []
+    "status": "IN_PROGRESS",
+    "qa": "PENDING",
+    "issues_done": [],
+    "issues_pending": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
   },
   "preferences": {
     "commit_style": "conventional",
@@ -76,21 +26,5 @@
     "max_parallel_branches": 3
   },
   "instincts": [],
-  "decisions": [
-    {
-      "issue": 5,
-      "decision": "UpdateTaskItemRequest migre en champs nullable pour support partial update",
-      "reason": "Issue demandait { titre?: string, statut?: string } avec mise a jour partielle"
-    },
-    {
-      "issue": 6,
-      "decision": "DELETE retourne 204 NoContent() au lieu de 200 Ok()",
-      "reason": "Critere d'acceptation explicite : 204 No Content si suppression reussie"
-    },
-    {
-      "issue": 7,
-      "decision": "MaxLength validator corrige de 200 a 100 + annotations [Required]/[MaxLength] ajoutees sur DTO",
-      "reason": "Issue specifie max 100 chars, setup initial avait 200"
-    }
-  ]
+  "decisions": []
 }
