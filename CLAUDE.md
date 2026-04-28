@@ -197,3 +197,9 @@ Tests .NET       -> .claude/skills/dotnet-testing.md
 Tests Angular    -> .claude/skills/angular-testing.md
 Deployment       -> .claude/skills/deployment.md
 Memory           -> .claude/skills/memory-ops.md
+
+## DESIGN PATTERNS
+Rules  -> .claude/rules/design-patterns.md
+Skills -> .claude/skills/design-patterns.md
+
+Charger ces deux fichiers pour chaque issue de developpement.
