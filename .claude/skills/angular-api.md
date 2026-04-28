@@ -1,116 +1,71 @@
-# Skill — Connexion Angular ↔ API .NET
+---
+name: angular-api
+description: Connecter Angular a l API .NET - CORS, proxy, JWT interceptor, services
+---
 
-## Configuration CORS côté .NET (Program.cs)
-```csharp
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AngularApp", policy =>
-    {
-        policy.WithOrigins("http://localhost:4200")
-              .AllowAnyHeader()
-              .AllowAnyMethod()
-              .AllowCredentials();
-    });
+# Skill - Connexion Angular API .NET
+
+## CORS cote .NET (Program.cs)
+builder.Services.AddCors(options => {
+  options.AddPolicy("AngularApp", policy => {
+    policy.WithOrigins("http://localhost:4200")
+          .AllowAnyHeader()
+          .AllowAnyMethod()
+          .AllowCredentials();
+  });
 });
-
-// Après app.UseRouting()
 app.UseCors("AngularApp");
-```
 
-## Service Angular générique
-```typescript
-@Injectable({ providedIn: 'root' })
+## Service API generique Angular
+@Injectable({ providedIn: "root" })
 export class ApiService {
   private http = inject(HttpClient);
 
   get<T>(endpoint: string, params?: any): Observable<ApiResponse<T>> {
-    return this.http.get<ApiResponse<T>>(
-      `${environment.apiUrl}${endpoint}`,
-      { params }
-    );
+    return this.http.get<ApiResponse<T>>(`${environment.apiUrl}${endpoint}`, { params });
   }
-
   post<T>(endpoint: string, body: any): Observable<ApiResponse<T>> {
-    return this.http.post<ApiResponse<T>>(
-      `${environment.apiUrl}${endpoint}`,
-      body
-    );
+    return this.http.post<ApiResponse<T>>(`${environment.apiUrl}${endpoint}`, body);
   }
-
   put<T>(endpoint: string, body: any): Observable<ApiResponse<T>> {
-    return this.http.put<ApiResponse<T>>(
-      `${environment.apiUrl}${endpoint}`,
-      body
-    );
+    return this.http.put<ApiResponse<T>>(`${environment.apiUrl}${endpoint}`, body);
   }
-
   delete<T>(endpoint: string): Observable<ApiResponse<T>> {
-    return this.http.delete<ApiResponse<T>>(
-      `${environment.apiUrl}${endpoint}`
-    );
+    return this.http.delete<ApiResponse<T>>(`${environment.apiUrl}${endpoint}`);
   }
 }
-```
 
-## AuthService complet
-```typescript
-@Injectable({ providedIn: 'root' })
-export class AuthService {
-  private api = inject(ApiService);
-  private router = inject(Router);
-  private readonly TOKEN_KEY = 'access_token';
-  private readonly REFRESH_KEY = 'refresh_token';
-
-  login(request: LoginRequest): Observable<AuthResponse> {
-    return this.api.post<AuthResponse>('/api/v1/auth/login', request)
-      .pipe(
-        map(res => res.data),
-        tap(auth => this.saveTokens(auth))
-      );
+## JWT Interceptor
+export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
+  const token = inject(AuthService).getToken();
+  if (token) {
+    req = req.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
   }
+  return next(req);
+};
 
-  register(request: RegisterRequest): Observable<AuthResponse> {
-    return this.api.post<AuthResponse>('/api/v1/auth/register', request)
-      .pipe(map(res => res.data), tap(auth => this.saveTokens(auth)));
-  }
+## Error Interceptor
+export const errorInterceptor: HttpInterceptorFn = (req, next) => {
+  return next(req).pipe(
+    catchError(error => {
+      if (error.status === 401) inject(Router).navigate(["/auth/login"]);
+      if (error.status === 403) inject(Router).navigate(["/forbidden"]);
+      return throwError(() => error);
+    })
+  );
+};
 
-  logout(): void {
-    localStorage.removeItem(this.TOKEN_KEY);
-    localStorage.removeItem(this.REFRESH_KEY);
-    this.router.navigate(['/auth/login']);
-  }
-
-  getToken(): string | null {
-    return localStorage.getItem(this.TOKEN_KEY);
-  }
-
-  isAuthenticated(): boolean {
-    const token = this.getToken();
-    if (!token) return false;
-    try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      return payload.exp > Date.now() / 1000;
-    } catch { return false; }
-  }
-
-  private saveTokens(auth: AuthResponse): void {
-    localStorage.setItem(this.TOKEN_KEY, auth.accessToken);
-    localStorage.setItem(this.REFRESH_KEY, auth.refreshToken);
-  }
+## AuthService
+getToken(): string | null { return localStorage.getItem("access_token"); }
+isAuthenticated(): boolean {
+  const token = this.getToken();
+  if (!token) return false;
+  const payload = JSON.parse(atob(token.split(".")[1]));
+  return payload.exp > Date.now() / 1000;
 }
-```
 
-## Structure d'un projet Fullstack
-## Ordre de démarrage en développement
-```bash
-# Terminal 1 — API .NET
-cd ~/projects/{ProjectName}/{ProjectName}.API
-dotnet run
-
-# Terminal 2 — Angular
-cd ~/projects/{ProjectName}/{ProjectName}-frontend
-ng serve --proxy-config proxy.conf.json
-```
-
-API  → https://localhost:5001/swagger
-App  → http://localhost:4200
+## Ordre de demarrage
+Terminal 1 : cd {ProjectName}.API && dotnet run
+Terminal 2 : cd {ProjectName}-frontend && ng serve --proxy-config proxy.conf.json
+API  : https://localhost:5001/swagger
+App  : http://localhost:4200

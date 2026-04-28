@@ -1,23 +1,52 @@
-# Skill — Opérations mémoire
+---
+name: memory-ops
+description: Lecture et ecriture de dev-memory.json
+---
 
-## Lire
-cat ~/uni5-dev-agent/dev-memory.json
+# Skill - Memory Operations
 
-## Mettre à jour un champ
-# Utiliser jq ou éditer directement le fichier JSON
+## Lire la memoire
+Get-Content dev-memory.json | ConvertFrom-Json
 
-## Structure
+## Structure dev-memory.json
 {
-  "project": { name, stack, repo_url, owner, last_sprint },
-  "preferences": { commit_style, pr_strategy, branch_naming },
-  "answers": { question: réponse },
-  "sprint": { current, velocity, dependency_graph },
-  "instincts": [{ pattern, confidence, action }],
-  "decisions": [{ at, context, decision, outcome, lesson }]
+  "project": {
+    "name": null,
+    "stack": null,
+    "repo_url": null,
+    "owner": null,
+    "repo": null,
+    "local_path": null
+  },
+  "sprint": {
+    "current": 1,
+    "issues_done": [],
+    "issues_pending": []
+  },
+  "preferences": {
+    "commit_style": "conventional",
+    "pr_strategy": "squash",
+    "branch_naming": "feat/issue-{N}-{slug}",
+    "max_parallel_branches": 3
+  },
+  "instincts": [],
+  "decisions": []
 }
 
-## Règles
-- Toujours lire avant d'écrire
-- Sauvegarder après chaque phase
-- Ne jamais effacer les decisions[]
-- Incrémenter sprint.current après chaque sprint
+## Mettre a jour apres chaque issue
+Ajouter dans issues_done[] :
+{
+  "number": {N},
+  "title": "{titre}",
+  "branch": "feat/issue-{N}-{slug}",
+  "pr": {PR_NUMBER},
+  "done_at": "{timestamp}"
+}
+
+## Sauvegarder les learnings
+Ajouter dans instincts[] :
+{
+  "pattern": "{description du pattern appris}",
+  "confidence": 0.9,
+  "action": "{ce que l agent doit faire}"
+}

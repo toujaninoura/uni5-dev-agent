@@ -1,42 +1,35 @@
-# Règles Authentication JWT
+# Rules - JWT Authentication
 
-## Packages NuGet
+## Packages
 dotnet add {Projet}.API package Microsoft.AspNetCore.Authentication.JwtBearer
-dotnet add {Projet}.API package System.IdentityModel.Tokens.Jwt
 dotnet add {Projet}.Infrastructure package Microsoft.AspNetCore.Identity.EntityFrameworkCore
 
 ## appsettings.json
 "JWT": {
   "Secret": "VotreSecretTresLongAuMoins32Caracteres!",
-  "Issuer": "ProductsApi",
-  "Audience": "ProductsApiUsers",
+  "Issuer": "ProjectApi",
+  "Audience": "ProjectApiUsers",
   "ExpirationInMinutes": 60,
   "RefreshTokenExpirationInDays": 7
 }
 
-## Entités
-- User.cs : IdentityUser + FirstName, LastName, CreatedAt, RefreshTokens
-- RefreshToken.cs : Id, Token, ExpiresAt, IsRevoked, UserId, User
+## Entites obligatoires
+- User : IdentityUser + FirstName, LastName, CreatedAt, RefreshTokens
+- RefreshToken : Id, Token, ExpiresAt, IsRevoked, UserId, User
 
-## Interfaces (Application/Interfaces/)
-- IAuthService : RegisterAsync, LoginAsync, RefreshTokenAsync, RevokeTokenAsync
-- IJwtService  : GenerateAccessToken, GenerateRefreshToken, GetPrincipalFromExpiredToken
+## Endpoints obligatoires
+- POST /api/v1/auth/register
+- POST /api/v1/auth/login
+- POST /api/v1/auth/refresh
+- POST /api/v1/auth/revoke [Authorize]
 
-## DTOs
-- RegisterRequest  : FirstName, LastName, Email, Password, ConfirmPassword
-- LoginRequest     : Email, Password
-- RefreshTokenRequest : RefreshToken
-- AuthResponse     : AccessToken, RefreshToken, ExpiresAt, UserId, Email, Roles
-
-## Controller (API/Controllers/AuthController.cs)
-- POST /api/auth/register
-- POST /api/auth/login
-- POST /api/auth/refresh
-- POST /api/auth/revoke [Authorize]
-
-## Sécuriser les autres controllers
-[Authorize] sur tous les controllers sauf AuthController
-[AllowAnonymous] uniquement sur les endpoints publics explicites
+## Regles securite
+- [Authorize] sur tous les endpoints sauf auth
+- [AllowAnonymous] uniquement sur register, login, refresh
+- Rotation des refresh tokens a chaque utilisation
+- Access token : 60 min / Refresh token : 7 jours
+- Jamais stocker le mot de passe en clair
+- Toujours hasher avec Identity
 
 ## Program.cs
 - AddIdentity<User, IdentityRole>
