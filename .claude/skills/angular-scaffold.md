@@ -60,3 +60,16 @@ Creer proxy.conf.json :
 ng build
 ng test --watch=false
 ng serve --proxy-config proxy.conf.json
+
+## Installer Bootstrap 5
+npm install bootstrap@5
+npm install @popperjs/core
+
+## Ajouter dans angular.json -> styles
+"styles": [
+  "node_modules/bootstrap/dist/css/bootstrap.min.css",
+  "src/styles.css"
+],
+"scripts": [
+  "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+]

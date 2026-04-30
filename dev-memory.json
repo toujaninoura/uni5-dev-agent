@@ -5,19 +5,30 @@
     "role": "Developer - reads issues and delivers code"
   },
   "project": {
-    "name": "contacts-manager",
+    "name": "contacts-app",
     "stack": "fullstack",
-    "repo_url": "https://github.com/toujaninoura/contacts-manager",
+    "repo_url": "https://github.com/toujaninoura/contacts-app",
     "owner": "toujaninoura",
-    "repo": "contacts-manager",
-    "local_path": "C:\\projects\\contacts-manager"
+    "repo": "contacts-app",
+    "local_path": "C:\\projects\\contacts-app"
   },
   "sprint": {
     "current": 1,
-    "status": "IN_PROGRESS",
-    "qa": "PENDING",
-    "issues_done": [],
-    "issues_pending": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+    "status": "DONE",
+    "qa": "PASSED",
+    "issues_done": [
+      { "number": 1, "title": "[SETUP] Initialisation solution N-Tier ASP.NET Core .NET 8", "branch": "feat/issue-1-setup-ntier", "pr": 11 },
+      { "number": 2, "title": "[DB] Configuration EF Core + SQL Server + Migrations + Seed Data", "branch": "feat/issue-2-efcore-db-migrations", "pr": 12 },
+      { "number": 3, "title": "[AUTH] Authentification JWT - Register et Login (backend)", "branch": "feat/issue-3-jwt-auth", "pr": 13 },
+      { "number": 4, "title": "[CRUD] API REST Contacts - Create, Read, Update, Delete", "branch": "feat/issue-4-crud-contacts", "pr": 14 },
+      { "number": 5, "title": "[VALIDATION] Règles métier - nom obligatoire, email valide et unique", "branch": "feat/issue-5-validations", "pr": 15 },
+      { "number": 6, "title": "[TESTS] Tests unitaires NUnit - services et validations (backend)", "branch": "feat/issue-6-tests-nunit", "pr": 16 },
+      { "number": 7, "title": "[SETUP] Initialisation projet Angular 17 + routing + services HTTP + intercepteur JWT", "branch": "feat/issue-7-setup-angular", "pr": 17 },
+      { "number": 8, "title": "[UI] Page Login Angular", "branch": "feat/issue-8-login-page", "pr": 18 },
+      { "number": 9, "title": "[UI] Page liste des contacts - tableau avec recherche en temps réel", "branch": "feat/issue-9-contact-list", "pr": 19 },
+      { "number": 10, "title": "[UI] Page formulaire contact - ajout et modification", "branch": "feat/issue-10-contact-form", "pr": 20 }
+    ],
+    "issues_pending": []
   },
   "preferences": {
     "commit_style": "conventional",
