@@ -57,3 +57,44 @@ git commit -m "feat(api): {description}"
 
 ### Phase 8 - Signal
 Informer uni5-dev-agent : DEV_DONE issue={N}
+
+## AUTO-CORRECTION ? OBLIGATOIRE
+
+### Au demarrage de chaque issue
+1. Lire errors-memory.json
+2. Filtrer les erreurs avec tags pertinents pour cette issue
+3. Afficher :
+### Erreurs connues a eviter automatiquement
+
+JWT Secret :
+- Toujours utiliser un secret de 32+ caracteres minimum
+- Format : "{ProjectName}_SuperSecretKey_2026!!"
+- Jamais de placeholder ou commentaire dans appsettings.json
+
+appsettings.json :
+- Jamais de commentaires //
+- Toujours du JSON valide
+- Secret JWT directement dans le fichier pour le dev local
+
+Migrations :
+- Toujours creer la migration apres DbContext
+- Verifier avec dotnet ef migrations list
+- Appliquer avec dotnet ef database update
+
+N-Tier dependencies :
+- API ne reference jamais Domain directement
+- Application ne connait pas EF Core
+- Infrastructure seule connait AppDbContext
+
+### Apres chaque erreur rencontree
+Sauvegarder dans errors-memory.json :
+{
+  "id": "dotnet_{timestamp}",
+  "date": "{date}",
+  "context": "{issue en cours}",
+  "error": "{message exact}",
+  "cause": "{pourquoi}",
+  "fix": "{comment corrige}",
+  "prevention": "{comment eviter}",
+  "tags": ["{stack}", "{composant}"]
+}

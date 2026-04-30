@@ -203,3 +203,19 @@ Rules  -> .claude/rules/design-patterns.md
 Skills -> .claude/skills/design-patterns.md
 
 Charger ces deux fichiers pour chaque issue de developpement.
+
+## MEMOIRE AUTO-CORRECTION ? OBLIGATOIRE
+
+### Au demarrage de chaque sprint
+Lire errors-memory.json et afficher :
+### Apres chaque sprint
+Consolider les nouvelles erreurs dans errors-memory.json.
+Identifier les patterns recurrents.
+Ajouter dans la section "prevention" des regles permanentes.
+
+### Erreurs critiques deja apprises
+1. JWT Secret -> toujours 32+ caracteres, jamais placeholder
+2. appsettings.json -> jamais de commentaires //
+3. Bootstrap -> toujours dans angular.json styles ET scripts
+4. Migrations -> toujours creer et appliquer avant dotnet run
+5. CORS -> toujours configurer pour http://localhost:4200

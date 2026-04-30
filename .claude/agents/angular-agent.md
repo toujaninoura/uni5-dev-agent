@@ -51,3 +51,46 @@ git commit -m "feat(angular): {description}"
 
 ### Phase 8 - Signal
 Informer uni5-dev-agent : DEV_DONE issue={N}
+
+## AUTO-CORRECTION ? OBLIGATOIRE
+
+### Au demarrage de chaque issue
+1. Lire errors-memory.json
+2. Filtrer les erreurs Angular pertinentes
+3. Afficher :
+### Erreurs connues a eviter automatiquement
+
+Bootstrap :
+- Toujours verifier que Bootstrap est dans angular.json styles ET scripts
+- Toujours verifier npm install bootstrap@5 avant de coder les composants
+- Utiliser les classes Bootstrap correctes : btn btn-primary, table table-striped...
+
+Async pipe :
+- Jamais de subscribe() dans les composants
+- Toujours utiliser async pipe dans les templates
+- Si subscribe necessaire -> takeUntilDestroyed()
+
+JWT Interceptor :
+- Toujours verifier que JWT interceptor est enregistre dans app.config.ts
+- Toujours verifier que AuthGuard est applique sur les routes protegees
+
+CORS :
+- Toujours verifier que CORS est configure dans Program.cs
+- URL Angular : http://localhost:4200
+
+Environment :
+- Toujours utiliser environment.apiUrl pour les appels API
+- Jamais hardcoder l URL de l API
+
+### Apres chaque erreur rencontree
+Sauvegarder dans errors-memory.json :
+{
+  "id": "angular_{timestamp}",
+  "date": "{date}",
+  "context": "{issue en cours}",
+  "error": "{message exact}",
+  "cause": "{pourquoi}",
+  "fix": "{comment corrige}",
+  "prevention": "{comment eviter}",
+  "tags": ["{composant}", "{feature}"]
+}
