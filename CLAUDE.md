@@ -219,3 +219,29 @@ Ajouter dans la section "prevention" des regles permanentes.
 3. Bootstrap -> toujours dans angular.json styles ET scripts
 4. Migrations -> toujours creer et appliquer avant dotnet run
 5. CORS -> toujours configurer pour http://localhost:4200
+
+## WIKI DE CONNAISSANCES ? OBLIGATOIRE
+
+### Au demarrage de chaque issue
+1. Lire wiki\index.md
+2. Lire wiki\dotnet\errors.md (si issue .NET)
+3. Lire wiki\angular\errors.md (si issue Angular)
+4. Appliquer proactivement toutes les corrections connues
+
+Afficher :
+### Apres chaque nouvelle erreur rencontree
+1. Ajouter dans wiki\{stack}\errors.md
+2. Mettre a jour wiki\log.md avec la date
+3. Mettre a jour wiki\index.md stats
+
+Format :
+## {Titre erreur}
+**Erreur**     : {message exact}
+**Cause**      : {pourquoi}
+**Fix**        : {solution}
+**Prevention** : {comment eviter}
+
+### Requetes wiki disponibles
+- "Qu est-ce que je sais sur JWT ?" -> chercher dans wiki/
+- "Ingere cet article : {url}"      -> ajouter dans raw/ et wiki/
+- "Lint mon wiki"                   -> verifier liens et coherence

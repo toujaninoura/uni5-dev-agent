@@ -44,7 +44,21 @@
       "Bash(git -C C:/projects/tasksAPI checkout main)",
       "Bash(git -C C:/projects/tasksAPI pull origin main)",
       "Bash(git stash *)",
-      "PowerShell(New-Item -ItemType Directory -Path \"C:\\\\projects\\\\contacts-app\\\\contacts-app-frontend\\\\src\\\\app\\\\features\\\\contacts\\\\contact-form\" -Force)"
+      "PowerShell(New-Item -ItemType Directory -Path \"C:\\\\projects\\\\contacts-app\\\\contacts-app-frontend\\\\src\\\\app\\\\features\\\\contacts\\\\contact-form\" -Force)",
+      "PowerShell(Set-Location \"C:\\\\projects\\\\task-manager\\\\task-manager-ui\"; $result = npm install --ignore-scripts 2>&1; Write-Output \"EXIT: $LASTEXITCODE\"; $result | Select-Object -Last 5)",
+      "PowerShell($pids = @\\(26352, 32880, 31900, 30012, 31192, 31916, 560, 17048, 32552\\); foreach \\($pid in $pids\\) { try { Stop-Process -Id $pid -Force -ErrorAction SilentlyContinue; Write-Output \"Killed $pid\" } catch { Write-Output \"Could not kill $pid\" } })",
+      "PowerShell($processList = @\\(26352, 32880, 31900, 30012, 31192, 31916, 560, 17048, 32552\\); foreach \\($procId in $processList\\) { try { Stop-Process -Id $procId -Force -ErrorAction SilentlyContinue; Write-Output \"Killed $procId\" } catch { Write-Output \"Could not kill $procId\" } })",
+      "PowerShell(Set-Location \"C:\\\\projects\\\\task-manager\\\\task-manager-ui\"; Write-Output \"Starting npm install...\"; npm install; Write-Output \"Exit code: $LASTEXITCODE\"; Test-Path \"C:\\\\projects\\\\task-manager\\\\task-manager-ui\\\\node_modules\")",
+      "PowerShell(Get-Process -Id 3632 -ErrorAction SilentlyContinue)",
+      "PowerShell(Stop-Process -Id 3632 -Force -ErrorAction SilentlyContinue)",
+      "PowerShell(Set-Location \"C:\\\\projects\\\\task-manager\\\\task-manager-ui\"; Write-Output \"Starting npm install --prefer-offline...\"; npm install --prefer-offline --no-audit --no-fund 2>&1 | Select-Object -Last 20; Write-Output \"EXIT: $LASTEXITCODE\"; Test-Path \".\\\\node_modules\\\\@angular\\\\core\")",
+      "PowerShell(Set-Location \"C:\\\\projects\\\\task-manager\\\\task-manager-ui\"; Write-Output \"Starting npm install...\"; npm install --no-audit --no-fund 2>&1 | Tee-Object -Variable output | Select-Object -Last 5; Write-Output \"EXIT: $LASTEXITCODE\"; if \\($?\\) { Test-Path \".\\\\node_modules\\\\@angular\\\\core\" } else { Write-Output \"Failed\" })",
+      "PowerShell(Set-Location \"C:\\\\projects\\\\task-manager\\\\task-manager-ui\"; npm install bootstrap@5.3.2 --no-audit --no-fund 2>&1 | Select-Object -Last 5; Write-Output \"EXIT: $LASTEXITCODE\")",
+      "PowerShell(Set-Location \"C:\\\\projects\\\\task-manager\\\\task-manager-ui\"; ng build --configuration development 2>&1 | Select-Object -Last 20; Write-Output \"EXIT: $LASTEXITCODE\")",
+      "PowerShell(Set-Location \"C:\\\\projects\\\\task-manager\\\\task-manager-ui\"; ng test --watch=false 2>&1 | Select-Object -Last 30; Write-Output \"EXIT: $LASTEXITCODE\")",
+      "PowerShell(Set-Location \"C:\\\\projects\\\\task-manager\\\\task-manager-ui\"; ng test --watch=false 2>&1 | Select-Object -Last 20; Write-Output \"EXIT: $LASTEXITCODE\")",
+      "PowerShell(Set-Location \"C:\\\\projects\\\\task-manager\\\\task-manager-ui\"; ng test --watch=false 2>&1 | Select-Object -Last 25; Write-Output \"EXIT: $LASTEXITCODE\")",
+      "PowerShell(npx skills add Astro-Han/karpathy-llm-wiki)"
     ]
   }
 }

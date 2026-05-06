@@ -1,7 +1,79 @@
 {
   "version": "1.0.0",
-  "last_updated": null,
-  "dotnet_errors": [],
-  "angular_errors": [],
+  "last_updated": "2026-05-05",
+  "dotnet_errors": [
+    {
+      "id": "dotnet_20260430_001",
+      "date": "2026-04-30",
+      "context": "Issue #1 - Setup N-Tier solution",
+      "error": "CS0234: Le nom de type ou d espace de noms 'Extensions' n existe pas dans l espace de noms 'Microsoft' - ILogger not found in Application project",
+      "cause": "Application project references ILogger but Microsoft.Extensions.Logging.Abstractions is not installed by default in classlib projects",
+      "fix": "dotnet add TaskManager.Application package Microsoft.Extensions.Logging.Abstractions --version 8.0.0",
+      "prevention": "Always add Microsoft.Extensions.Logging.Abstractions to any classlib that uses ILogger",
+      "tags": ["dotnet", "classlib", "ilogger", "application-layer"]
+    },
+    {
+      "id": "dotnet_20260430_002",
+      "date": "2026-04-30",
+      "context": "Issue #1 - Setup N-Tier solution",
+      "error": "CS1061: IServiceCollection does not contain definition for AddAutoMapper",
+      "cause": "AutoMapper package alone does not include the DI extension. Need AutoMapper.Extensions.Microsoft.DependencyInjection",
+      "fix": "dotnet add package AutoMapper.Extensions.Microsoft.DependencyInjection --version 12.0.1",
+      "prevention": "Always install AutoMapper.Extensions.Microsoft.DependencyInjection alongside AutoMapper for DI support",
+      "tags": ["dotnet", "automapper", "di", "api-layer"]
+    },
+    {
+      "id": "dotnet_20260430_003",
+      "date": "2026-04-30",
+      "context": "Issue #1 - Setup N-Tier solution",
+      "error": "PR creation fails: No commits between main and feat branch when repo is empty",
+      "cause": "GitHub repo was completely empty (no main branch). Feature branch created as orphan. After creating main, branches had no common history.",
+      "fix": "Push empty init commit to main first, then create feature branch from main, then create PR",
+      "prevention": "Before creating feature branch, always ensure main exists on GitHub with at least one commit",
+      "tags": ["git", "github", "pr", "empty-repo"]
+    }
+  ],
+  "angular_errors": [
+    {
+      "id": "angular_20260505_001",
+      "date": "2026-05-05",
+      "context": "Issue #6 - Setup Angular 17 + Bootstrap 5",
+      "error": "npm install hangs for 20+ minutes with UNABLE_TO_VERIFY_LEAF_SIGNATURE and ENOTFOUND errors, each package taking 21-70 seconds",
+      "cause": "npm strict-ssl=true causes SSL certificate verification failures against registry.npmjs.org on this machine. npm retries 3 times per package before falling back to cache, causing extreme slowness.",
+      "fix": "npm config set strict-ssl false then npm install --no-audit --no-fund. Also kill any concurrent npm install processes first (they block each other).",
+      "prevention": "At Angular project start: 1) Check npm config get strict-ssl 2) If true, set to false 3) Never launch multiple npm install in parallel on same directory 4) Use --no-audit --no-fund flags to skip slower checks",
+      "tags": ["angular", "npm", "ssl", "bootstrap", "install"]
+    },
+    {
+      "id": "angular_20260505_002",
+      "date": "2026-05-05",
+      "context": "Issue #6 - Setup Angular 17 + Bootstrap 5",
+      "error": "ng new run from background creates directory but multiple concurrent npm installs block each other causing none to complete",
+      "cause": "Launching ng new in background then immediately running npm install separately causes race condition. ng new internally runs npm install, creating conflict with the manual npm install.",
+      "fix": "Either wait for ng new to complete before running npm install, or kill all concurrent node.exe processes before starting a fresh npm install.",
+      "prevention": "After ng new: 1) Wait for it to complete fully 2) Check that node_modules exists 3) Only then run additional npm install for extra packages like bootstrap",
+      "tags": ["angular", "ng-new", "npm", "concurrent-processes"]
+    },
+    {
+      "id": "angular_20260505_003",
+      "date": "2026-05-05",
+      "context": "Issue #6 - Setup Angular 17 + Bootstrap 5",
+      "error": "ng test --watch=false times out with Vitest worker timeout when running all spec files together",
+      "cause": "Vitest worker pool default settings cause timeout when running 5+ spec files simultaneously. Each worker needs Angular TestBed setup which is expensive.",
+      "fix": "Add tsConfig to angular.json test options. Run tests per-file with --include flag. The timeout does not occur when files run sequentially.",
+      "prevention": "Add tsConfig in angular.json test builder options. Test files individually during development. Global run works but needs adequate timeout.",
+      "tags": ["angular", "vitest", "ng-test", "timeout", "worker"]
+    },
+    {
+      "id": "angular_20260505_004",
+      "date": "2026-05-05",
+      "context": "Issue #6 - Setup Angular 17 + Bootstrap 5",
+      "error": "ng new generates Angular 21 project (not Angular 17) with Vitest instead of Jasmine/Karma",
+      "cause": "Angular CLI 21.x is installed globally. ng new always creates project matching CLI version. Angular 21 uses Vitest by default instead of Jasmine+Karma.",
+      "fix": "Adapt spec files to use Vitest syntax (vi.fn(), vi.spyOn() instead of jasmine.createSpyObj). Use provideRouter([]) instead of RouterTestingModule. Use provideHttpClient() + provideHttpClientTesting() instead of HttpClientTestingModule.",
+      "prevention": "Check ng version before coding tests. If Angular 21+: use Vitest globals (no import needed, configured in tsconfig.spec.json types). Use functional providers not deprecated module imports.",
+      "tags": ["angular", "ng-version", "vitest", "jasmine", "testing"]
+    }
+  ],
   "common_errors": []
 }
