@@ -245,3 +245,10 @@ Format :
 - "Qu est-ce que je sais sur JWT ?" -> chercher dans wiki/
 - "Ingere cet article : {url}"      -> ajouter dans raw/ et wiki/
 - "Lint mon wiki"                   -> verifier liens et coherence
+
+## REGLE ? PROJET EXISTANT EN LOCAL
+Si le repo existe deja en local :
+- Ne jamais faire git clone
+- Faire uniquement git checkout main && git pull
+- Chemin local prioritaire sur le clone
+- Verifier avec : Test-Path "C:\projects\{nom-projet}"
