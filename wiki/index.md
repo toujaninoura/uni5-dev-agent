@@ -14,6 +14,6 @@ Derniere mise a jour : {date}
 - wiki/log.md              <- Journal des apprentissages
 
 ## Stats
-- Erreurs .NET documentees  : 5
+- Erreurs .NET documentees  : 15
 - Erreurs Angular documentees: 4
 - Patterns documentes       : 0

@@ -15,3 +15,15 @@
 - raw/errors/2026-05-06-bootstrap-not-loaded.md
 
 Ces sources ont ete compilees dans wiki/ automatiquement.
+
+## 2026-05-07 — Issue #27 (task-manager sprint 2)
+- EntityState.Modified sur entite trackee
+- Double fetch UpdateAsync / SoftDeleteAsync
+- HasQueryFilter sur navigation property
+- HasMaxLength manquant sur enum string
+- Entite sans CreatedAt/UpdatedAt + DateTime sans defaut C#
+- Scope imbrique dans DatabaseSeeder
+- Mot de passe seed hardcode
+- GetUserId() avec int.Parse + null-forgiving
+- Mutation manuelle au lieu d AutoMapper dans UpdateAsync
+- Seed sans try/catch dans Program.cs
