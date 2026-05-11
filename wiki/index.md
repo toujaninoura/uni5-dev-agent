@@ -1,19 +1,17 @@
-﻿# Wiki — Index
-Derniere mise a jour : {date}
+# Wiki — Index
+Derniere mise a jour : 2026-05-07
 
 ## .NET
-- wiki/dotnet/errors.md    <- Erreurs et solutions .NET
-- wiki/dotnet/patterns.md  <- Design patterns utilises
-- wiki/dotnet/jwt.md       <- Authentification JWT
+- [wiki/dotnet/errors.md](dotnet/errors.md) — Erreurs et solutions .NET (2026-05-07)
+- [wiki/dotnet/architecture.md](dotnet/architecture.md) — Architecture TaskManager : entités, endpoints, services, règles d'accès (2026-05-07)
 
 ## Angular
-- wiki/angular/errors.md   <- Erreurs et solutions Angular
-- wiki/angular/bootstrap.md<- Bonnes pratiques Bootstrap
+- [wiki/angular/errors.md](angular/errors.md) — Erreurs et solutions Angular (2026-05-07)
 
 ## Log
-- wiki/log.md              <- Journal des apprentissages
+- [wiki/log.md](log.md) — Journal des apprentissages
 
 ## Stats
-- Erreurs .NET documentees  : 15
-- Erreurs Angular documentees: 4
-- Patterns documentes       : 0
+- Erreurs .NET documentees  : 20
+- Erreurs Angular documentees: 9
+- Articles architecture      : 1

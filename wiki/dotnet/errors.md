@@ -90,3 +90,36 @@
 **Cause**      : Exception non catchee pendant le demarrage -> app ne demarre pas, message peu clair
 **Fix**        : Encapsuler dans try/catch avec `logger.LogError(ex, ...)`, l app continue meme si seed echoue
 **Prevention** : Toute operation de demarrage non critique (seed, migration check) doit etre dans un try/catch
+
+## AsNoTracking sur entité passée à UpdateAsync → InvalidOperationException (EF Core)
+**Erreur**     : `InvalidOperationException` — "The instance of entity type cannot be tracked because another instance with the same key value is already being tracked"
+**Cause**      : Entité chargée avec `AsNoTracking()` puis passée à `UpdateAsync` qui appelle `_context.Update(entity)`. EF Core ne peut pas réconcilier une instance détachée avec une instance déjà trackée.
+**Fix**        : Créer `GetByXxxTrackingAsync` (sans AsNoTracking) pour les flows de modification. Supprimer l'appel explicite `UpdateAsync` — EF Core suit automatiquement les changements, `SaveChangesAsync()` suffit.
+**Prevention** : Règle par convention — `GetByXxxAsync` = AsNoTracking (lecture seule), `GetByXxxTrackingAsync` = avec tracking (pour modification). Ne jamais passer une entité AsNoTracking à une méthode de mise à jour.
+
+## FluentValidation appelée après les opérations DB (fail-fast violé)
+**Erreur**     : Requêtes SQL exécutées même pour des requêtes invalides (owner check, email lookup avant validation)
+**Cause**      : `ValidateAsync()` placé après les premiers appels `GetByIdAsync` / `FindByEmailAsync` dans la méthode de service
+**Fix**        : Déplacer `ValidateAsync()` en toute première instruction de la méthode de service, avant tout appel repository
+**Prevention** : Pattern fail-fast — toujours valider en premier. Si validation échoue → `throw ValidationException` immédiatement, zéro appel DB
+
+## Migration déjà appliquée — conflit __EFMigrationsHistory
+**Erreur**     : `dotnet ef database update` échoue — table existe déjà en base mais migration absente de `__EFMigrationsHistory`
+**Cause**      : Migration appliquée depuis une branche feature précédente. EF Core veut créer la table, mais elle existe déjà.
+**Fix**        : Insérer manuellement via sqlcmd : `INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion]) VALUES ('20260507123059_NomMigration', '8.0.0');` puis relancer `dotnet ef database update`
+**Prevention** : Avant de créer une migration, vérifier `SELECT * FROM __EFMigrationsHistory`. En cas de conflit inter-branches, insérer manuellement — jamais modifier ou supprimer une migration existante.
+
+## CS8625 — null to non-nullable dans ApiResponse<object>.Ok(null, ...)
+**Erreur**     : Warning CS8625 — Cannot convert null literal to non-nullable reference type
+**Cause**      : `ApiResponse<object>.Ok(null, "message")` avec nullable reference types activé — T est non-nullable
+**Fix**        : `ApiResponse<string>.Ok(string.Empty, "message")` pour les endpoints sans données de retour (Accept, Reject, Remove)
+**Prevention** : Quand un endpoint ne retourne pas de données, utiliser `ApiResponse<string>` avec `string.Empty` plutôt que `ApiResponse<object>` avec null
+
+## Tests NUnit cassés après extension de IUnitOfWork
+**Erreur**     : `NullReferenceException` dans les TestFixtures existants après ajout d'une propriété à IUnitOfWork
+**Cause**      : Les tests mockaient IUnitOfWork mais ne configuraient pas la nouvelle propriété (ex: `Collaborators`). Quand le service appelle `_unitOfWork.Collaborators.IsAcceptedCollaboratorAsync()`, la propriété retourne null.
+**Fix**        : Dans `SetUp()`, ajouter le mock de la nouvelle propriété : `_collaboratorRepositoryMock = new Mock<ITaskCollaboratorRepository>(); _unitOfWorkMock.Setup(u => u.Collaborators).Returns(_collaboratorRepositoryMock.Object);`
+**Prevention** : À chaque ajout de propriété dans IUnitOfWork, vérifier tous les TestFixtures qui mockent IUnitOfWork. Utiliser `MockBehavior.Strict` pour détecter immédiatement les propriétés non mockées.
+
+## See Also
+- [Architecture TaskManager — entités, endpoints, services](./architecture.md)

@@ -1,0 +1,22 @@
+﻿{
+  "hooks": [
+    {
+      "matcher": "mcp__github__merge_pull_request",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "echo RAPPEL OBLIGATOIRE : PR mergee. Faire maintenant : 1. Ingest errors dans wiki 2. Ingest architecture updates 3. Update wiki/log.md. Ne pas passer a l issue suivante avant."
+        }
+      ]
+    },
+    {
+      "matcher": "mcp__github__create_pull_request",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "echo VERIFICATION : Avant de creer la PR, REVIEW_PASSED requis. As-tu appele code-reviewer ?"
+        }
+      ]
+    }
+  ]
+}

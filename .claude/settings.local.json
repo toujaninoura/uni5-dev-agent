@@ -58,7 +58,8 @@
       "PowerShell(Set-Location \"C:\\\\projects\\\\task-manager\\\\task-manager-ui\"; ng test --watch=false 2>&1 | Select-Object -Last 30; Write-Output \"EXIT: $LASTEXITCODE\")",
       "PowerShell(Set-Location \"C:\\\\projects\\\\task-manager\\\\task-manager-ui\"; ng test --watch=false 2>&1 | Select-Object -Last 20; Write-Output \"EXIT: $LASTEXITCODE\")",
       "PowerShell(Set-Location \"C:\\\\projects\\\\task-manager\\\\task-manager-ui\"; ng test --watch=false 2>&1 | Select-Object -Last 25; Write-Output \"EXIT: $LASTEXITCODE\")",
-      "PowerShell(npx skills add Astro-Han/karpathy-llm-wiki)"
+      "PowerShell(npx skills add Astro-Han/karpathy-llm-wiki)",
+      "PowerShell(New-Item -ItemType Directory -Path \"C:\\\\projects\\\\task-manager\\\\task-manager-ui\\\\src\\\\app\\\\features\\\\tasks\\\\shared-tasks\" -Force)"
     ]
   }
 }
