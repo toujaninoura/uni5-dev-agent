@@ -1,4 +1,4 @@
-﻿{
+{
   "hooks": [
     {
       "matcher": "mcp__github__merge_pull_request",
@@ -6,6 +6,15 @@
         {
           "type": "command",
           "command": "echo RAPPEL OBLIGATOIRE : PR mergee. Faire maintenant : 1. Ingest errors dans wiki 2. Ingest architecture updates 3. Update wiki/log.md. Ne pas passer a l issue suivante avant."
+        }
+      ]
+    },
+    {
+      "matcher": "Bash",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "echo $CLAUDE_TOOL_INPUT | grep -q 'git push origin main' && echo 'RAPPEL OBLIGATOIRE : Push main detecte. Si une PR vient detre mergee en local : 1. Ingest errors dans wiki 2. Ingest architecture updates 3. Update wiki/log.md. Ne pas passer a l issue suivante avant.' || true"
         }
       ]
     },

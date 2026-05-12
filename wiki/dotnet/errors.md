@@ -121,5 +121,17 @@
 **Fix**        : Dans `SetUp()`, ajouter le mock de la nouvelle propriété : `_collaboratorRepositoryMock = new Mock<ITaskCollaboratorRepository>(); _unitOfWorkMock.Setup(u => u.Collaborators).Returns(_collaboratorRepositoryMock.Object);`
 **Prevention** : À chaque ajout de propriété dans IUnitOfWork, vérifier tous les TestFixtures qui mockent IUnitOfWork. Utiliser `MockBehavior.Strict` pour détecter immédiatement les propriétés non mockées.
 
+## CS0234 — ILogger non trouve dans un projet classlib
+**Erreur**     : `CS0234 'Extensions' n existe pas dans l espace de noms 'Microsoft'` — ILogger introuvable dans le projet Application
+**Cause**      : Les projets classlib ne référencent pas `Microsoft.Extensions.Logging.Abstractions` par défaut
+**Fix**        : `dotnet add {Projet}.Application package Microsoft.Extensions.Logging.Abstractions --version 8.0.0`
+**Prevention** : Toujours ajouter `Microsoft.Extensions.Logging.Abstractions` à tout projet classlib qui utilise ILogger
+
+## CS1061 — AddAutoMapper introuvable sur IServiceCollection
+**Erreur**     : `CS1061 IServiceCollection does not contain definition for AddAutoMapper`
+**Cause**      : Le package `AutoMapper` seul ne fournit pas l extension DI — il faut `AutoMapper.Extensions.Microsoft.DependencyInjection` en complément
+**Fix**        : `dotnet add package AutoMapper.Extensions.Microsoft.DependencyInjection`
+**Prevention** : Toujours installer `AutoMapper.Extensions.Microsoft.DependencyInjection` avec AutoMapper pour le support DI
+
 ## See Also
 - [Architecture TaskManager — entités, endpoints, services](./architecture.md)
